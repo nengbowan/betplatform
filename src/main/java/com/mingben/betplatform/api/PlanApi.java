@@ -72,5 +72,4 @@ public class PlanApi {
         return betMap;
     }
 
-
 }
