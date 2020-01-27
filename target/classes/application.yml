@@ -1,0 +1,15 @@
+server:
+  port: 8000
+
+spring:
+  datasource:
+    generateUniqueName: true
+    url: jdbc:mysql://localhost:3306/betplatform?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: root2019
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

@@ -10,10 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,String> {
-    public Page<List<User>> findByUsernameLike(Pageable pageable , String username);
+public interface AdminRepository extends JpaRepository<Admin,String> {
+    public Admin findByUsernameAndPasswd(String username, String passwd);
 
-    public User findByUsernameAndPasswd(String username, String passwd);
-
-    public User findByUsername(String username);
+    public Admin findByUsername(String username);
 }

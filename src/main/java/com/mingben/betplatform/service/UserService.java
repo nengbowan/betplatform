@@ -1,11 +1,16 @@
 package com.mingben.betplatform.service;
 
+import com.mingben.betplatform.entity.Admin;
 import com.mingben.betplatform.entity.User;
 import com.mingben.betplatform.enums.UserTypeEnum;
 import com.mingben.betplatform.exception.BussinessException;
+import com.mingben.betplatform.exception.UserNotExistException;
+import com.mingben.betplatform.exception.UserPasswordNotMatchException;
 import com.mingben.betplatform.repository.UserRepository;
 import com.mingben.betplatform.util.DateUtil;
+import com.mingben.betplatform.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,9 +42,7 @@ public class UserService {
      * @param userType 试用 天卡 周卡 月卡 年卡 永久卡
      */
     @PostMapping
-    public void userCreate(@RequestParam(name = "username") String username,
-                           @RequestParam(name = "passwd")String passwd,
-                           @RequestParam(name = "userType")String userType) {
+    public void userCreate(String username, String passwd , String userType) {
         Date now = new Date();
         UserTypeEnum typeEnum = UserTypeEnum.findByUserType(userType);
         Date expiredDate = DateUtil.addHour(now ,typeEnum.getHour());
@@ -73,7 +76,30 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Page<List<User>> findByUsernameLike(Pageable pageable, String username) {
-        return userRepository.findByUsernameLike(pageable , username);
+    /**
+     * 用户登录
+     * @param username
+     * @param passwd
+     */
+    public String userLogin(String username, String passwd) throws UserNotExistException, UserPasswordNotMatchException {
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            throw new UserNotExistException();
+        }
+        User matched = userRepository.findByUsernameAndPasswd(username , passwd);
+        if(matched == null){
+            throw new UserPasswordNotMatchException();
+        }
+
+        String token = JwtTokenUtil.createToken(username , passwd ,  "user");
+        return token;
+    }
+
+    public User findByUsernameAndPasswd(String username, String passwd){
+        return userRepository.findByUsernameAndPasswd(username , passwd);
+    }
+
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username);
     }
 }
