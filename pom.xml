@@ -78,6 +78,12 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.3.0</version>
 		</dependency>
+		
+		<!-- SpringBoot集成thymeleaf模板 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 
 	</dependencies>
 

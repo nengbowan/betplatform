@@ -6,10 +6,16 @@ spring:
     generateUniqueName: true
     url: jdbc:mysql://localhost:3306/betplatform?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
-    password: root2019
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+  # 模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    # 禁用缓存
+    cache: false

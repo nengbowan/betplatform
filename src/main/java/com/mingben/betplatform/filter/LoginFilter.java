@@ -15,7 +15,7 @@ import java.util.List;
 public class LoginFilter implements Filter {
 
 
-    private List<String> whiteUrlList = Arrays.asList("/user/login","/admin/login");
+    private static List<String> whiteUrlList = Arrays.asList("/user/login","/admin/login","/admin/index");
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -36,7 +36,8 @@ public class LoginFilter implements Filter {
             response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT");
             response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-            if(whiteUrlList.contains(requestUrl)){
+            if(whiteUrlList.contains(requestUrl) || requestUrl.contains(".css") || requestUrl.contains(".js") || requestUrl.contains(".png")|| requestUrl.contains(".jpg") 
+            		|| requestUrl.contains(".ico") || requestUrl.contains(".woff") || requestUrl.contains(".ttf")){
                 chain.doFilter(request , response);
             }else{
                 String jwtToken = ((HttpServletRequest) request).getHeader("token");
@@ -46,6 +47,7 @@ public class LoginFilter implements Filter {
                     ResultDto result = ResultDto.builder().success(false).message("403").build();
                     pw.println(JSONObject.toJSONString(result));
                     return;
+                    
                 }
                 chain.doFilter(request , response);
 
