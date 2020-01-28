@@ -5,6 +5,7 @@
     <!-- project default level -->
     <logger name="com.mingben.betplatform" level="DEBUG" />
 
+    <logger name="org.springframework.boot.web.servlet.ServletContextInitializerBeans" level="DEBUG"/>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

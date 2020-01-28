@@ -6,8 +6,6 @@ import com.mingben.betplatform.entity.Admin;
 import com.mingben.betplatform.exception.UserNotExistException;
 import com.mingben.betplatform.exception.UserPasswordNotMatchException;
 import com.mingben.betplatform.service.AdminService;
-import com.mingben.betplatform.service.UserService;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,18 +22,12 @@ public class AdminController {
 
     /**
      * 管理员登录
-     * @param username
-     * @param passwd
      */
     @PostMapping(value = "/login")
-    public ResultDto adminLogin(@RequestParam(name = "username") String username,
-                                @RequestParam(name = "passwd")String passwd
-            //@RequestParam(name = "username") String username,
-            //                                @RequestParam(name = "passwd")String passwd
-    ){
+    public ResultDto adminLogin(@RequestBody Admin admin){
         ResultDto result = ResultDto.builder().build();
         try {
-            String jwtToken = adminService.adminLogin(username , passwd);
+            String jwtToken = adminService.adminLogin(admin.getUsername() , admin.getPasswd());
             result.setData(jwtToken);
         } catch (UserNotExistException e) {
             result.setSuccess(Boolean.FALSE);
@@ -51,7 +43,7 @@ public class AdminController {
      * 管理员信息
      */
     @GetMapping(value = "/info")
-    public ResultDto adminLogin(@AdminAnno Admin admin){
+    public ResultDto adminInfo(@AdminAnno Admin admin){
         ResultDto result = ResultDto.builder().data(admin).build();
         return result;
     }
