@@ -43,7 +43,7 @@ public class JwtTokenUtil {
      *
      * @param token
      */
-    public static HashMap<String,String> getPayLoad(String token){
+    public static HashMap<String,String> getPayLoad(String token)throws JWTVerificationException{
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
@@ -58,11 +58,9 @@ public class JwtTokenUtil {
             jwtMap.put("password",password);
             jwtMap.put("type",type);
             return jwtMap;
-        } catch (JWTVerificationException exception){
-            //Invalid signature/claims
-            return null;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+
         }
         return null;
     }

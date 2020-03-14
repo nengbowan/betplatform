@@ -47,6 +47,7 @@ public class RoleAnnotationParameterResolver implements HandlerMethodArgumentRes
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest request, WebDataBinderFactory binderFactory) throws Exception {
         String token = request.getHeader("token");
         Map<String,String> decodeMap = JwtTokenUtil.getPayLoad(token);
+
         String username = decodeMap.get("username");
         String passwd = decodeMap.get("password");
         String type = decodeMap.get("type");

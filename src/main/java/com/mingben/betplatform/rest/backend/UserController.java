@@ -79,13 +79,6 @@ public class UserController {
     }
 
 
-    /**
-     * 用户信息
-     */
-    @GetMapping(value = "/info")
-    public ResultDto adminLogin(@UserAnno User user){
-        ResultDto result = ResultDto.builder().data(user).build();
-        return result;
-    }
+
 
 }
